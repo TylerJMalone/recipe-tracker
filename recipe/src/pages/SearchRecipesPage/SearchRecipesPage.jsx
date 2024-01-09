@@ -3,7 +3,7 @@ import './SearchRecipesPage.css';
 
 function SearchRecipesPage() {
     const [searchQuery, setSearchQuery] = useState('');
-    const [recipes, setRecipes] = useState([]); results
+    const [recipes, setRecipes] = useState([]); // State to hold search results
     const [isLoading, setIsLoading] = useState(false); 
 
     const handleSearch = async (e) => {
@@ -11,7 +11,7 @@ function SearchRecipesPage() {
         setIsLoading(true);
 
         try {
-            
+           
             const response = await fetch(`http://localhost:5000/api/searchRecipes?query=${encodeURIComponent(searchQuery)}`);
             
             if (!response.ok) {
@@ -22,7 +22,7 @@ function SearchRecipesPage() {
             setRecipes(data.results);
         } catch (error) {
             console.error("Failed to fetch recipes:", error);
-            
+           
         } finally {
             setIsLoading(false);
         }

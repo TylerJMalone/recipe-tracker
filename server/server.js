@@ -1,48 +1,29 @@
+require('dotenv').config();
 const express = require('express');
-const { ApolloServer } = require('@apollo/server');
-const { expressMiddleware } = require('@apollo/server/express4');
-const path = require('path');
-const { authMiddleware } = require('./utils/auth');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const recipeRoutes = require('./routes/recipes');
 
-const { typeDefs, resolvers } = require('./schemas');
-const db = require('./config/connection');
 
-const PORT = process.env.PORT || 3001;
 const app = express();
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
+const PORT = process.env.PORT || 5000;
+
+// MongoDB connection string
+const MONGO_URI = 'mongodb://localhost:27017/RecipeBook';
+ 
+
+// Connect to MongoDB
+mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Successfully connected to MongoDB'))
+  .catch((error) => console.error('Could not connect to MongoDB:', error));
+
+// Middlewares
+app.use(cors()); // Enable CORS
+app.use(express.json()); 
+app.use('/api', recipeRoutes);
+
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
-
-// Create a new instance of an Apollo server with the GraphQL schema
-const startApolloServer = async () => {
-  await server.start();
-
-  app.use(express.urlencoded({ extended: false }));
-  app.use(express.json());
-
-  // Serve up static assets
-  app.use('/images', express.static(path.join(__dirname, '../client/images')));
-
-  app.use('/graphql', expressMiddleware(server, {
-    context: authMiddleware
-  }));
-
-  if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/dist')));
-
-    app.get('*', (req, res) => {
-      res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-    });
-  }
-
-  db.once('open', () => {
-    app.listen(PORT, () => {
-      console.log(`API server running on port ${PORT}!`);
-      console.log(`Use GraphQL at http://localhost:${PORT}/graphql`);
-    });
-  });
-};
-
-// Call the async function to start the server
-startApolloServer();
