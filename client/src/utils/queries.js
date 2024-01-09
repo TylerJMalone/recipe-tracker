@@ -1,0 +1,21 @@
+import { gql } from '@apollo/client';
+
+export const QUERY_USER = gql`
+  {
+    user {
+      firstName
+      lastName
+      books {
+        _id
+        title
+        recipes {
+          recipeId
+          title
+          description
+          image
+          imageType
+        }
+      }
+    }
+  }
+`;
