@@ -5,8 +5,8 @@
 .welcome-section {
     text-align: center;
     padding: 20px;
-    background-color: #ff7043;
-    color: #ffffff;
+    /*background-color: #ff7043;*/
+    /*color: #ffffff;*/
     margin-bottom: 30px;
     border-radius: 8px;
 }
@@ -25,7 +25,7 @@
 }
 
 .featured-recipes-carousel h2, .latest-recipes h2, .categories-section h2 {
-    color: #333333;
+   /* color: #333333;*/
     margin-bottom: 15px;
     text-align: left;
 }
@@ -43,7 +43,7 @@
     width: 150px;
     height: 150px;
     margin: 10px;
-    background-color: #f5f5f5;
+   /* background-color: #f5f5f5;*/
     display: flex;
     justify-content: center;
     align-items: center;

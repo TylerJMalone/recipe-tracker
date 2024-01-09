@@ -12,6 +12,7 @@ function LoginPage() {
 
     return (
         <div className="auth-page">
+            <h1>Hi! Welcome Back</h1>
             <form onSubmit={handleLogin} className="auth-form">
                 <h2>Login</h2>
                 <input

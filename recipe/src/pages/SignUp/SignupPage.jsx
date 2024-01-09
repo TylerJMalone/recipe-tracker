@@ -13,6 +13,7 @@ function SignupPage() {
 
     return (
         <div className="auth-page">
+            <h1>Hi! Welcome Foodie!</h1>
             <form onSubmit={handleSignup} className="auth-form">
                 <h2>Sign Up</h2>
                 <input
@@ -34,7 +35,7 @@ function SignupPage() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <button type="submit">Sign Up</button>
-                <p>Already have an account? <a href="/login">Log In</a></p>
+                <p>Already have an account? What are you waiting for,<a href="/login">Log In</a></p>
             </form>
         </div>
     );
