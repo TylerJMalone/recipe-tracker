@@ -9,7 +9,9 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 // MongoDB connection string
-const MONGO_URI = 'mongodb://localhost:27017/RecipeBook';
+const MONGO_URI = 'mongodb://127.0.0.1:27017/RecipeBook';
+
+
  
 
 // Connect to MongoDB
