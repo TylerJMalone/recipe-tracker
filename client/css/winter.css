@@ -6,3 +6,68 @@
     --five:#ABC6E8;
     --six:#C0E5E5;
 }
+
+/*All Text...*/
+h1{
+    font-weight: bolder;
+    font-size: 40px;
+    color: var(--two);
+}
+
+h2, h3, h4{
+    font-weight: bolder;
+    font-size: 30px;
+    color: var(--one);
+}
+
+h5, h6{
+    font-weight: lighter;
+    font-size: 25px;
+    color: var(--four);
+}
+
+p {
+    font-weight: lighter;
+    font-size: 20px;
+    color: var(--two);
+}
+/*...in all .jsx files*/
+
+/*Header.jsx*/
+.header {
+    background-color: var(--six);
+    color: var(--two);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navigation a {
+    text-decoration: none;
+    color: var(--two);
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.navigation a:hover {
+    color: var(--four);
+    background-color: var(--five);
+}
+
+/*Home.jsx*/
+.welcome-section {
+    background-color: var(--six);
+    color: var(--two);
+}
+
+.featured-recipes-carousel h2, .latest-recipes h2, .categories-section h2 {
+    color: var(--one);
+}
+
+.category-item {
+    background-color: var(--three);
+}
+/*LoginPage.jsx*/
+/*SearchRecipesPage.jsx*/
+/*SignUpPage.jsx*/
+/*Footer.jsx*/
+.footer {
+    background-color: var(--six);
+}
