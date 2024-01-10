@@ -16,5 +16,9 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.2.0"
+  },
+  "dependencies": {
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1"
   }
 }
