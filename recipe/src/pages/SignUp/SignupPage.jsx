@@ -1,14 +1,33 @@
 import React, { useState } from 'react';
 import './SignupPage.css';
+import { useMutation } from '@apollo/client';
+import Auth from '../utils/auth';
+import { ADD_USER } from '../utils/mutations';
 
 function SignupPage() {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
+    const [formState, setFormState] = useState({ email: '', password: '' });
+    const [addUser] = useMutation(ADD_USER);
 
-    const handleSignup = (e) => {
+    const handleSignup = async (e) => {
         e.preventDefault();
-       
+        const mutationResponse = await addUser({
+            variables: {
+              email: formState.email,
+              password: formState.password,
+              firstName: formState.firstName,
+              lastName: formState.lastName,
+            },
+        });
+        const token = mutationResponse.data.addUser.token;
+        Auth.login(token);
+    };
+
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormState({
+          ...formState,
+          [name]: value,
+        });
     };
 
     return (
@@ -19,20 +38,20 @@ function SignupPage() {
                 <input
                     type="text"
                     placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
+                    name="username"
+                    onChange={handleChange}
                 />
                 <input
                     type="email"
                     placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    name="email"
+                    onChange={handleChange}
                 />
                 <input
                     type="password"
                     placeholder="Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    name="password"
+                    onChange={handleChange}
                 />
                 <button type="submit">Sign Up</button>
                 <p>Already have an account? What are you waiting for,<a href="/login">Log In</a></p>

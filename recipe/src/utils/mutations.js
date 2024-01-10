@@ -39,21 +39,10 @@ export const ADD_USER = gql`
 export const SAVE_RECIPE = gql`
   mutation saveRecipe(
     $recipeId: String!
-    $title: String!
-    $description: String!
-    $image: String!
-    $imageType: String!
   ) {
     saveRecipe(
       recipeId: $recipeId
-      title: $title
-      description: $description
-      image: $image
-      imageType: $imageType
     ) {
-      recipe {
-        
-      }
 
     }
 }
