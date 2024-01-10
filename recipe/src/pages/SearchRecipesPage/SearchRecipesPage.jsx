@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import './SearchRecipesPage.css';
 
 function SearchRecipesPage() {
@@ -41,18 +42,14 @@ function SearchRecipesPage() {
         setIsLoading(true);
 
         try {
-           
             const response = await fetch(`http://localhost:5000/api/searchRecipes?query=${encodeURIComponent(searchQuery)}`);
-            
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-
             const data = await response.json();
             setRecipes(data.results);
         } catch (error) {
             console.error("Failed to fetch recipes:", error);
-           
         } finally {
             setIsLoading(false);
         }
@@ -232,10 +229,10 @@ function SearchRecipesPage() {
             <div className="search-results">
                 {isLoading ? <p>Loading...</p> : 
                     recipes.map(recipe => (
-                        <div key={recipe.id}>
+                        <div key={recipe.id} className="recipe-item">
                             <h3>{recipe.title}</h3>
                             <img src={recipe.image} alt={recipe.title} />
-                            {/* Additional recipe details */}
+                            <Link to={`/recipe/${recipe.id}`}>View Details</Link> {/* Link to Recipe Details */}
                         </div>
                     ))
                 }

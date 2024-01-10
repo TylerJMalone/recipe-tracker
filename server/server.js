@@ -1,18 +1,15 @@
-require('dotenv').config();
+require('dotenv').config(); // This should be the first line
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const recipeRoutes = require('./routes/recipes');
-
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // MongoDB connection string
 const MONGO_URI = 'mongodb://127.0.0.1:27017/RecipeBook';
-
-
- 
 
 // Connect to MongoDB
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -23,7 +20,6 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use(cors()); // Enable CORS
 app.use(express.json()); 
 app.use('/api', recipeRoutes);
-
 
 // Start the server
 app.listen(PORT, () => {
