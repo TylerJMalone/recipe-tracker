@@ -23,4 +23,20 @@ router.get('/searchRecipes', async (req, res) => {
     }
 });
 
+
+router.get('/randomRecipes', async (req, res) => {
+    try {
+        const response = await axios.get('https://api.spoonacular.com/recipes/random', {
+            params: {
+                apiKey: process.env.SPOONACULAR_API_KEY,
+                number: 10 // Number of random recipes
+            }
+        });
+        // Directly send the array if that's what the Spoonacular API returns
+        res.json(response.data.recipes);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 module.exports = router;
