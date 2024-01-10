@@ -12,6 +12,7 @@ function LoginPage() {
 
     return (
         <div className="auth-page">
+            <h1>Hi! Welcome Back</h1>
             <form onSubmit={handleLogin} className="auth-form">
                 <h2>Login</h2>
                 <input
@@ -27,7 +28,7 @@ function LoginPage() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <button type="submit">Log In</button>
-                <p>Don't have an account? <a href="/signup">Sign Up</a></p>
+                <p>Don't have an account? No worries,<a href="/signup">Sign Up</a></p>
             </form>
         </div>
     );
