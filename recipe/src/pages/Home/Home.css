@@ -16,6 +16,12 @@
     --secondary-color: #eee; 
 }
 
+.welcome-section {
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+}
 
 section {
     background-color: var(--background-light);
@@ -34,7 +40,6 @@ section h2 {
     font-size: 1.75rem; 
 }
 
-
 .featured-recipes-carousel {
     width: 100%;
 }
@@ -46,15 +51,25 @@ section h2 {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-
 .slick-dots li button:before {
     color: var(--highlight-color);
+}
+
+.category-item {
+    width: 150px;
+    height: 150px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
 }
 
 .slick-dots li.slick-active button:before {
     color: var(--highlight-color);
 }
-
 
 @media (max-width: 768px) {
     .home-page {
