@@ -4,8 +4,8 @@ import './SearchRecipesPage.css';
 
 function SearchRecipesPage() {
     const [searchQuery, setSearchQuery] = useState('');
-    const [dietType, setDietType] = useState('any-diet');
-    const [cuisineType, setCuisineType] = useState('any-cuisine');
+    const [dietType, setDietType] = useState('any');
+    const [cuisineType, setCuisineType] = useState('any');
     const [recipes, setRecipes] = useState([]); // State to hold search results
     const [isLoading, setIsLoading] = useState(false); 
     const cuisines = [
@@ -42,7 +42,7 @@ function SearchRecipesPage() {
         setIsLoading(true);
 
         try {
-            const response = await fetch(`http://localhost:5000/api/searchRecipes?query=${encodeURIComponent(searchQuery)}`);
+            const response = await fetch(`http://localhost:5000/api/searchRecipes?query=${encodeURIComponent(searchQuery, cuisineType, dietType)}`);
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
@@ -76,7 +76,7 @@ function SearchRecipesPage() {
                             type="radio" 
                             id="any-diet" 
                             name="diet" 
-                            value="any-diet" 
+                            value='any'
                             onChange={(e) => setDietType(e.target.value)}
                         />
                         <label for="any-diet">Any</label>
@@ -149,7 +149,7 @@ function SearchRecipesPage() {
                             type="radio" 
                             id="any-cuisine" 
                             name="cuisine" 
-                            value="any-cuisine" 
+                            value="any" 
                             onChange={(e) => setCuisineType(e.target.value)}
                         />
                         <label for="any-cuisine">Any</label>
