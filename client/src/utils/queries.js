@@ -8,13 +8,22 @@ export const QUERY_USER = gql`
       books {
         _id
         title
-        recipes {
-          recipeId
-          title
-          description
-          image
-          imageType
-        }
+        recipes
+      }
+    }
+  }
+`;
+
+export const QUERY_ME = gql`
+  query me {
+    me {
+      _id
+      username
+      email
+      books {
+        _id
+        title
+        recipes
       }
     }
   }
