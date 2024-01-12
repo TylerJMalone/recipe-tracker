@@ -1,5 +1,6 @@
 import React from "react";
 import "./Footer.css";
+import "../../../css/winter.css";
 
 function Footer() {
   return (

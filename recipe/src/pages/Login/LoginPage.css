@@ -8,11 +8,11 @@
 .auth-form {
     width: 300px;
     padding: 20px;
-    border: 1px solid #ddd;
+    /*border: 1px solid #ddd;*/
     border-radius: 8px;
     box-sizing: border-box; 
     text-align: center;
-    background-color: #ffffff; 
+    /*background-color: #ffffff; */
 }
 
 .auth-form input {
@@ -20,7 +20,7 @@
     padding: 10px;
     margin: 10px 0;
     border-radius: 5px;
-    border: 1px solid #ddd;
+    /*border: 1px solid #ddd;*/
     box-sizing: border-box; 
 }
 
@@ -28,22 +28,22 @@
     width: calc(100% - 20px); 
     padding: 10px;
     margin-top: 10px;
-    background-color: #ff7043;
-    color: white;
+    /*background-color: #ff7043;
+    color: white;*/
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
-.auth-form button:hover {
+/*.auth-form button:hover {
     background-color: #ffa726;
-}
+}*/
 
 .auth-form p {
     margin-top: 15px;
 }
 
 .auth-form a {
-    color: #007bff;
+    /*color: #007bff;*/
     text-decoration: none;
 }
