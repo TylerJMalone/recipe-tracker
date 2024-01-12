@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header/Header';
 import HomePage from './pages/Home/Home';
-import footer from './components/Footer/Footer';
+import Footer from './components/Footer/Footer';
 import SearchRecipesPage from './pages/SearchRecipesPage/SearchRecipesPage';
 import RecipeDetailsPage from './pages/RecipeDetailsPage/RecipeDetailsPage';
 import UserProfilePage from './pages/UserProfilePage/UserProfilePage';
@@ -23,7 +23,7 @@ function App() {
     <ApolloProvider client={client}>
       <AuthProvider>
         
-          <Header />
+          <Header/>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/recipes" element={<SearchRecipesPage />} />
@@ -37,6 +37,7 @@ function App() {
             <Route path="/signup" element={<SignupPage />} />
             {/* Other routes */}
           </Routes>
+          <Footer/>
       
       </AuthProvider>
     </ApolloProvider>

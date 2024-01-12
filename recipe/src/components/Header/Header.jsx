@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Header.css';
 import '../../css/winter.css';
+import theLogo from '../../images/Spoons-logo.png'
 
 import { useAuth } from '../../context/AuthContext'; 
 
@@ -17,7 +18,7 @@ function Header() {
     return (
         <header className="header">
             <div className="logo">
-                <Link to="/">Spoons</Link>
+                <Link to="/"><img src={theLogo} alt="Spoons logo"/></Link>
             </div>
             <nav className="navigation">
                 <Link to="/">Home</Link>
