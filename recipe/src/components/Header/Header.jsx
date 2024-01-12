@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Header.css';
 import '../../css/winter.css';
-import avatar from '../../images/Spoons-logo.png'
+
 import { useAuth } from '../../context/AuthContext'; 
 
 function Header() {
@@ -17,7 +17,7 @@ function Header() {
     return (
         <header className="header">
             <div className="logo">
-                <Link to="/"><Image src={avatar}/></Link>
+                <Link to="/">Spoons</Link>
             </div>
             <nav className="navigation">
                 <Link to="/">Home</Link>
