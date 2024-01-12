@@ -3,7 +3,7 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './Home.css';
-import '../../../css/winter.css';
+
 
 function Home() {
     const [featuredRecipes, setFeaturedRecipes] = useState([]);

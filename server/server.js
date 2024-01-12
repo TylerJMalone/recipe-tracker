@@ -4,6 +4,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const recipeRoutes = require('./routes/recipes');
+const userRoutes = require('./routes/userRoutes')
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -20,6 +21,7 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use(cors()); // Enable CORS
 app.use(express.json()); 
 app.use('/api', recipeRoutes);
+app.use('/api/users', userRoutes);
 
 // Start the server
 app.listen(PORT, () => {

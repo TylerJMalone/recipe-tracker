@@ -1,46 +1,53 @@
 const mongoose = require('mongoose');
-
 const { Schema } = mongoose;
-const bcrypt = require('bcrypt');
-const Book = require('./Book');
 
 const userSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  lastName: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true,
-    minlength: 5
-  },
-  books: [Book.schema]
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        minlength: 3
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    savedRecipes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Recipe'
+    }],
+    createdRecipes: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Recipe'
+    }],
+    cookbooks: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Cookbook'
+    }]
+}, {
+    timestamps: true
 });
 
-// set up pre-save middleware to create password
 userSchema.pre('save', async function(next) {
-  if (this.isNew || this.isModified('password')) {
-    const saltRounds = 10;
-    this.password = await bcrypt.hash(this.password, saltRounds);
-  }
+    
+    if (!this.isModified('password')) return next();
 
-  next();
+
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+    next();
 });
 
-// compare the incoming password with the hashed password
-userSchema.methods.isCorrectPassword = async function(password) {
-  return await bcrypt.compare(password, this.password);
+userSchema.methods.comparePassword = async function(candidatePassword) {
+    return await bcrypt.compare(candidatePassword, this.password);
 };
 
 const User = mongoose.model('User', userSchema);
