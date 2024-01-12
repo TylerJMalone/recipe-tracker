@@ -28,3 +28,15 @@ export const QUERY_ME = gql`
     }
   }
 `;
+
+export const QUERY_SAVED = gql`
+  query getSaved($recipes: [ID]!) {
+    recipes(recipes: $recipes) {
+      _id
+      title
+      description
+      image
+      imageType
+    }
+  }
+`;
