@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Header.css';
+import '../../css/winter.css';
 import { useAuth } from '../../context/AuthContext'; 
 
 function Header() {

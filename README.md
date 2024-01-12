@@ -22,6 +22,10 @@ Why pluck your hair trying to remember a recipe your great-grandmother's father'
 The list of technologies used and why we used them will go here.
 ```
 
+### API(s)
+
+Recipe finding API: [Spoonacular](https://spoonacular.com)
+
 ### Getting Started
 
 ```md
@@ -44,7 +48,7 @@ Screenshots/GIFs will go here
 
 ### Github Repository
 
-- [Click here](https://github.com/TylerJMalone/recipe-tracker)
+- [Spoos](https://github.com/TylerJMalone/recipe-tracker)
 
 ### Authors
 
