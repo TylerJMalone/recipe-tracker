@@ -4,7 +4,7 @@ import { useAuth } from '../../context/AuthContext';
 import './LoginPage.css';
 
 function LoginPage() {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState(''); // Changed from username to email
     const [password, setPassword] = useState('');
     const { login } = useAuth();
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ function LoginPage() {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ email: username, password }),
+                body: JSON.stringify({ email, password }), 
             });
     
             if (!response.ok) {
@@ -46,11 +46,11 @@ function LoginPage() {
             <form onSubmit={handleLogin} className="auth-form">
                 <h2>Login</h2>
                 <input
-                    type="text"
-                    placeholder="Username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                />
+                type="email" // Change type to email for better validation
+                placeholder="Email" // Updated placeholder
+                value={email}
+                onChange={(e) => setEmail(e.target.value)} // Update the state change function
+            />
                 <input
                     type="password"
                     placeholder="Password"
