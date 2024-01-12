@@ -8,15 +8,22 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.logo {
+/* .logo {
     font-size: 24px;
     font-weight: bold;
-    color: #ffffff; /* White text color */
-}
+    color: #ffffff;
+} */
 
-.logo a {
+/* .logo a {
     text-decoration: none;
     color: inherit;
+} */
+
+.logo  {
+    max-width: 55%;
+    width: 80px;
+    height: auto;
+    margin-bottom: 10px;
 }
 
 .navigation a {
