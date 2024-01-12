@@ -1,10 +1,10 @@
 :root{
-    --one:#B06DAD;
-    --two:#873B96;
-    --three:#BCB3D8;
-    --four:#89A2D4;
-    --five:#ABC6E8;
-    --six:#C0E5E5;
+    --one:#AF6DAC;
+    --two:#863C95;
+    --three:#BBB2D7;
+    --four:#86A0D2;
+    --five:#AAC5E7;
+    --six:#C0E5E4;
 }
 
 /*All Text...*/
@@ -37,7 +37,6 @@ p {
 .header {
     background-color: var(--six);
     color: var(--two);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .navigation a {
@@ -64,10 +63,69 @@ p {
 .category-item {
     background-color: var(--three);
 }
+
+section {
+    background-color: var(--three); 
+}
 /*LoginPage.jsx*/
+.auth-form {
+    border: 1px solid var(--five);
+    background-color: var(--three);
+}
+
+.auth-form input {
+    border: 1px solid var(--five);
+}
+
+.auth-form button {
+    background-color: var(--two);
+    color: var(--six);
+}
+
+.auth-form button:hover {
+    background-color: var(--one);
+}
+
+.auth-form a {
+    color: var(--four);
+}
 /*SearchRecipesPage.jsx*/
+.search-bar input {
+    border: 1px solid var(--five);
+}
+
+.search-bar button {
+    background-color: var(--two);
+    color: var(--six);
+}
+
+.search-bar button:hover {
+    background-color: var(--one);
+}
 /*SignUpPage.jsx*/
+.auth-form {
+    border: 1px solid var(--five);
+    background-color: var(--three);
+}
+
+.auth-form input {
+    border: 1px solid var(--five);
+}
+
+.auth-form button {
+    background-color: var(--two);
+    color: var(--six);
+}
+
+.auth-form button:hover {
+    background-color: var(--one);
+}
+
+.auth-form a {
+    color: var(--four);
+}
 /*Footer.jsx*/
 .footer {
     background-color: var(--six);
+    color: var(--two);
 }

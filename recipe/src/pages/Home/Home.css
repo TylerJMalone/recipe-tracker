@@ -8,13 +8,13 @@
     max-width: 1200px;
 }
 
-:root {
+/* :root {
     --highlight-color: #4db6ac;
     --background-light: #f9f9f9;
     --text-color: #333;
     --secondary-text-color: #555;
     --secondary-color: #eee;
-}
+} */
 
 .welcome-section {
     text-align: center;
@@ -35,7 +35,7 @@
 
 
 section {
-    background-color: var(--background-light);
+    /*background-color: var(--background-light);*/
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     padding: 20px;
