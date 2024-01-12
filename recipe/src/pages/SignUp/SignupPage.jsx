@@ -1,33 +1,37 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import './SignupPage.css';
-import { useMutation } from '@apollo/client';
-import Auth from '../utils/auth';
-import { ADD_USER } from '../utils/mutations';
 
 function SignupPage() {
-    const [formState, setFormState] = useState({ email: '', password: '' });
-    const [addUser] = useMutation(ADD_USER);
-
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const { login } = useAuth();
+    const navigate = useNavigate();
     const handleSignup = async (e) => {
         e.preventDefault();
-        const mutationResponse = await addUser({
-            variables: {
-              email: formState.email,
-              password: formState.password,
-              firstName: formState.firstName,
-              lastName: formState.lastName,
-            },
-        });
-        const token = mutationResponse.data.addUser.token;
-        Auth.login(token);
-    };
-
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormState({
-          ...formState,
-          [name]: value,
-        });
+        try {
+            const response = await fetch('http://localhost:5000/api/users/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username, email, password }),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Signup failed');
+            }
+    
+         
+            console.log('Signup successful:', await response.json());
+    
+          
+            navigate('/login');
+        } catch (error) {
+            console.error('Signup failed:', error);
+        }
     };
 
     return (
@@ -38,23 +42,23 @@ function SignupPage() {
                 <input
                     type="text"
                     placeholder="Username"
-                    name="username"
-                    onChange={handleChange}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                 />
                 <input
                     type="email"
                     placeholder="Email"
-                    name="email"
-                    onChange={handleChange}
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                 />
                 <input
                     type="password"
                     placeholder="Password"
-                    name="password"
-                    onChange={handleChange}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
                 <button type="submit">Sign Up</button>
-                <p>Already have an account? What are you waiting for,<a href="/login">Log In</a></p>
+                <p>Already have an account? What are you waiting for, <a href="/login">Log In</a></p>
             </form>
         </div>
     );

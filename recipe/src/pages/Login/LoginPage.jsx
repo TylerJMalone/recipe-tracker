@@ -1,34 +1,44 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext'; 
 import './LoginPage.css';
-import { useState } from 'react';
-import { useMutation } from '@apollo/client';
-import { LOGIN } from '../utils/mutations';
-import Auth from '../utils/auth';
 
 function LoginPage() {
-    const [formState, setFormState] = useState({ email: '', password: '' });
-    const [login, { error }] = useMutation(LOGIN);
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
     const handleLogin = async (e) => {
         e.preventDefault();
         try {
-            const mutationResponse = await login({
-              variables: { email: formState.email, password: formState.password },
+            const response = await fetch('http://localhost:5000/api/users/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email: username, password }),
             });
-            const token = mutationResponse.data.login.token;
-            Auth.login(token);
-        } catch (e) {
-            console.log(e);
+    
+            if (!response.ok) {
+                throw new Error('Login failed');
+            }
+    
+            const data = await response.json();
+            console.log('Login data:', data);  
+    
+            if (data.token) {
+                login(data.token); 
+                navigate('/profile'); 
+                
+                console.error('No token received');
+            }
+        } catch (error) {
+            console.error('Login failed:', error);
         }
     };
+    
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormState({
-          ...formState,
-          [name]: value,
-        });
-    };
 
     return (
         <div className="auth-page">
@@ -38,14 +48,14 @@ function LoginPage() {
                 <input
                     type="text"
                     placeholder="Username"
-                    name="username"
-                    onChange={handleChange}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
                 />
                 <input
                     type="password"
                     placeholder="Password"
-                    name="password"
-                    onChange={handleChange}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
                 />
                 <button type="submit">Log In</button>
                 <p>Don't have an account? No worries,<a href="/signup">Sign Up</a></p>

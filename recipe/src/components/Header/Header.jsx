@@ -1,11 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Header.css';
-import "../../../css/winter.css";
+import { useAuth } from '../../context/AuthContext'; 
 
 function Header() {
-   
-    const isAuthenticated = false; 
+    const { user, logout } = useAuth(); 
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout(); 
+        navigate('/'); 
+    };
 
     return (
         <header className="header">
@@ -15,11 +20,11 @@ function Header() {
             <nav className="navigation">
                 <Link to="/">Home</Link>
                 <Link to="/recipes">Browse Recipes</Link>
-                {isAuthenticated ? (
+                {user ? ( // Check if user is authenticated
                     <>
-                        <Link to="/create">Create Recipe</Link>
+                        
                         <Link to="/profile">Profile</Link>
-                        <Link to="/logout">Log Out</Link>
+                        <button onClick={handleLogout}>Log Out</button> {/* Logout button */}
                     </>
                 ) : (
                     <>

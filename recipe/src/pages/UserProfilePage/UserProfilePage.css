@@ -1,0 +1,34 @@
+/* UserProfilePage.css */
+.user-profile-page {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-profile-page h1, .user-profile-page h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.user-profile-page img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.user-profile-page ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.user-profile-page li {
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+/* Add more styling as needed */
