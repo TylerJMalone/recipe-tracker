@@ -43,7 +43,7 @@ router.post('/login', async (req, res) => {
 
         console.log("Password comparison successful."); // Log if password comparison is successful
 
-        const token = jwt.sign({ userId: user._id }, 'YOUR_SECRET_KEY', { expiresIn: '1h' });
+        const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
         console.log(`Token generated for user with email: ${email}`); // Log token generation
 
         res.json({ token });

@@ -31,14 +31,13 @@ function LoginPage() {
             if (data.token) {
                 login(data.token); 
                 navigate('/profile'); 
-                
+            } else {
                 console.error('No token received');
             }
         } catch (error) {
             console.error('Login failed:', error);
         }
     };
-    
 
 
     return (

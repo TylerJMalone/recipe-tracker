@@ -1,8 +1,14 @@
 const express = require('express');
 const axios = require('axios');
+const multer = require('multer');
+const Recipe = require('../models/Recipe');
 const router = express.Router();
 
-const SPOONACULAR_API_KEY = process.env.SPOONACULAR_API_KEY; 
+
+const SPOONACULAR_API_KEY = process.env.SPOONACULAR_API_KEY;
+const upload = multer();
+const BASE_URL = 'http://localhost:5000';
+
 
 router.get('/searchRecipes', async (req, res) => {
     try {
@@ -23,33 +29,53 @@ router.get('/searchRecipes', async (req, res) => {
     }
 });
 
-
 router.get('/randomRecipes', async (req, res) => {
     try {
         const response = await axios.get('https://api.spoonacular.com/recipes/random', {
             params: {
-                apiKey: process.env.SPOONACULAR_API_KEY,
+                apiKey: SPOONACULAR_API_KEY,
                 number: 10 // Number of random recipes
             }
         });
-        // Directly send the array if that's what the Spoonacular API returns
         res.json(response.data.recipes);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 });
 
-router.get('/getRecipeDetails/:id', async (req, res) => {
+router.get('/getUserRecipes/:userId', async (req, res) => {
     try {
-        const recipeId = req.params.id;
-        const response = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/information`, {
-            params: {
-                apiKey: SPOONACULAR_API_KEY,
-            },
-        });
-        res.json(response.data);
+        const userId = req.params.userId;
+        const recipes = await Recipe.find({ userId });
+        res.json(recipes);
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        console.error('Error in /getUserRecipes:', error);
+        res.status(500).json({ message: "Internal server error", error: error.toString() });
     }
 });
+
+router.post('/createRecipe', async (req, res) => {
+    try {
+        const { userId, title, ingredients, instructions, readyInMinutes, servings } = req.body;
+
+        const newRecipe = new Recipe({
+            userId,
+            title,
+            ingredients: Array.isArray(ingredients) ? ingredients : ingredients.split('\n'),
+            instructions: Array.isArray(instructions) ? instructions : instructions.split('\n'),
+            readyInMinutes,
+            servings
+        });
+
+        const savedRecipe = await newRecipe.save();
+        res.status(201).json(savedRecipe);
+    } catch (error) {
+        console.error("Error in /api/createRecipe:", error);
+        res.status(500).json({ message: "Internal server error", error: error.toString() });
+    }
+});
+
+module.exports = router;
+
+
 module.exports = router;
