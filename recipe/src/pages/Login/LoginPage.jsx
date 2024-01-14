@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext'; 
 import './LoginPage.css';
+import '../../css/winter.css';
 
 function LoginPage() {
     const [email, setEmail] = useState(''); // Changed from username to email
@@ -42,8 +43,8 @@ function LoginPage() {
 
     return (
         <div className="auth-page">
-            <h1>Hi! Welcome Back</h1>
             <form onSubmit={handleLogin} className="auth-form">
+            <h1>Hi! Welcome Back</h1>
                 <h2>Login</h2>
                 <input
                 type="email" // Change type to email for better validation
