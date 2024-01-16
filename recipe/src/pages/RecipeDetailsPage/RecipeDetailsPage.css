@@ -11,6 +11,8 @@
     max-width: 100%;
     height: auto;
     border-radius: 4px;
+    display: block;
+    margin: 20px auto; /* Center the image and add some margin */
 }
 
 .recipe-details h1 {

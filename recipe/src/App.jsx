@@ -14,9 +14,10 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 
 const client = new ApolloClient({
-  uri: '/graphql',
+  uri: 'http://localhost:5000/graphql', // This line needs to be updated
   cache: new InMemoryCache(),
 });
+
 
 function App() {
   return (

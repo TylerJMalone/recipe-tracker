@@ -6,8 +6,6 @@ const router = express.Router();
 
 
 const SPOONACULAR_API_KEY = process.env.SPOONACULAR_API_KEY;
-const upload = multer();
-const BASE_URL = 'http://localhost:5000';
 
 
 router.get('/searchRecipes', async (req, res) => {
@@ -75,7 +73,19 @@ router.post('/createRecipe', async (req, res) => {
     }
 });
 
+router.get('/getRecipeDetails/:id', async (req, res) => {
+    try {
+        const recipeId = req.params.id;
+        const response = await axios.get(`https://api.spoonacular.com/recipes/${recipeId}/information`, {
+            params: {
+                apiKey: SPOONACULAR_API_KEY,
+            },
+        });
+        res.json(response.data);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+});
+
 module.exports = router;
 
-
-module.exports = router;

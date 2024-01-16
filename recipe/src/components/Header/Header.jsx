@@ -11,10 +11,10 @@ function Header() {
     const navigate = useNavigate();
 
     const handleLogout = () => {
+        console.log("Logout button clicked");
         logout(); 
         navigate('/'); 
     };
-
     return (
         <header className="header">
             <div className="logo">

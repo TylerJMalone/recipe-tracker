@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import { searchRecipes } from './RecipeService';
+import { useLazyQuery } from '@apollo/client';
+import { SEARCH_RECIPES } from '../../graphql/queries';
 
 function SearchComponent() {
   const [query, setQuery] = useState('');
-  const [recipes, setRecipes] = useState([]);
+  const [executeSearch, { loading, data }] = useLazyQuery(SEARCH_RECIPES, {
+    variables: { query }
+  });
 
-  const handleSearch = async (event) => {
+  const handleSearch = (event) => {
     event.preventDefault();
-    try {
-      const data = await searchRecipes({ query });
-      setRecipes(data.results);
-    } catch (error) {
-      console.error('Failed to fetch recipes:', error);
+    if (query) {
+      executeSearch();
     }
   };
 
@@ -22,7 +22,7 @@ function SearchComponent() {
         <button type="submit">Search</button>
       </form>
       <div>
-        {recipes.map((recipe, index) => (
+        {loading ? <p>Loading...</p> : data?.searchRecipes.map((recipe, index) => (
           <div key={index}>
             <h3>{recipe.title}</h3>
             <img src={recipe.image} alt={recipe.title} />
