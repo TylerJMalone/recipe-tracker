@@ -99,3 +99,39 @@ section {
     padding: 10px;
     cursor: pointer; /* Indicates clickable items */
 }
+
+
+.content-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.featured-recipes-section {
+    flex-grow: 2; /* Makes this section larger */
+    margin-right: 20px; /* Adds spacing between the sections */
+    /* Adjust width as needed for your layout */
+}
+
+.chatbot-section {
+    flex-grow: 1; /* Adjust as needed for your layout */
+    /* Consider setting a max-width if necessary */
+}
+
+/* You might need to adjust the styles for the slider and chatbot to fit the new layout */
+.featured-recipes-carousel .slick-slide img {
+    max-width: 100%;
+    height: auto; /* Adjust height as needed */
+}
+
+/* Adjustments for responsiveness */
+@media (max-width: 768px) {
+    .content-container {
+        flex-direction: column;
+    }
+    .featured-recipes-section, .chatbot-section {
+        flex-grow: 1;
+        margin-right: 0;
+        width: 100%; /* Makes sections full width on smaller screens */
+    }
+}
