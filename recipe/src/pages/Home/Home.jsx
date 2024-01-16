@@ -75,7 +75,7 @@ function Home() {
 
     return (
         <div className="home-page">
-            <div className="section-container">
+            <div className="content-container">
                 {/* Featured Recipes Section */}
                 <section className="featured-recipes-section">
                     <h2>Featured Recipes</h2>
@@ -118,9 +118,9 @@ function Home() {
                         ))}
                     </div>
                 </section>
-
-                {/* ... other sections ... */}
             </div>
+
+            {/* ... other sections if any ... */}
         </div>
     );
 }
