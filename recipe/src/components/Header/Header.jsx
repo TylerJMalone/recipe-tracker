@@ -15,6 +15,8 @@ function Header() {
         logout(); 
         navigate('/'); 
     };
+
+    
     return (
         <header className="header">
             <div className="logo">
@@ -23,11 +25,10 @@ function Header() {
             <nav className="navigation">
                 <Link to="/">Home</Link>
                 <Link to="/recipes">Browse Recipes</Link>
-                {user ? ( // Check if user is authenticated
+                {user ? (
                     <>
-                        
                         <Link to="/profile">Profile</Link>
-                        <button onClick={handleLogout}>Log Out</button> {/* Logout button */}
+                        <Link to="/" onClick={handleLogout} className="navigation-link">Log Out</Link> {/* Logout button styled as a link */}
                     </>
                 ) : (
                     <>
@@ -39,5 +40,4 @@ function Header() {
         </header>
     );
 }
-
 export default Header;

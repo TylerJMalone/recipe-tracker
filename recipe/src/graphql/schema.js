@@ -19,12 +19,18 @@ const typeDefs = gql`
     ingredients: [String]!
   }
 
+  type ChatbotResponse {
+    answerText: String
+    newContextId: String
+  }
+
   type Query {
     randomRecipes: [Recipe]
     getUserRecipes(userId: ID!): [Recipe]
     getRecipeDetails(id: ID!): Recipe
     searchRecipes(query: String!): [Recipe]
-  } 
+    chatWithBot(userInput: String!, contextId: String): ChatbotResponse
+  }
 
   type Mutation {
     register(username: String!, email: String!, password: String!): User

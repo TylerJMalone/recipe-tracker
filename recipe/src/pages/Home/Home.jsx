@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
-import { RANDOM_RECIPES_QUERY } from '../../graphql/queries'; // Make sure to create this query
+import { useQuery, useLazyQuery } from '@apollo/client';
+import { RANDOM_RECIPES_QUERY, CHAT_WITH_BOT_QUERY } from '../../graphql/queries';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './Home.css';
@@ -12,11 +12,32 @@ function Home() {
     const navigate = useNavigate();
     const { data, loading, error } = useQuery(RANDOM_RECIPES_QUERY);
 
+    // Chatbot state
+    const [userInput, setUserInput] = useState('');
+    const [chatHistory, setChatHistory] = useState([]);
+    const [contextId, setContextId] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [chatbotError, setChatbotError] = useState('');
+
+    const [getChatResponse, { data: chatData, loading: chatLoading, error: chatQueryError }] = useLazyQuery(CHAT_WITH_BOT_QUERY);
+
     useEffect(() => {
         if (data && data.randomRecipes) {
             setFeaturedRecipes(data.randomRecipes);
         }
     }, [data]);
+
+    useEffect(() => {
+        if (chatData && chatData.chatWithBot) {
+            const { answerText, newContextId } = chatData.chatWithBot;
+            setChatHistory(prevHistory => [...prevHistory, { question: userInput, answer: answerText }]);
+            setContextId(newContextId);
+        }
+
+        if (chatQueryError) {
+            setChatbotError('Error communicating with the chatbot.');
+        }
+    }, [chatData, chatQueryError]);
 
     const settings = {
         dots: true,
@@ -32,12 +53,30 @@ function Home() {
         navigate(`/recipe/${id}`);
     };
 
+    const handleInputChange = (event) => {
+        setUserInput(event.target.value);
+    };
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        setIsSubmitting(true);
+        getChatResponse({ variables: { userInput, contextId } });
+    };
+
+    useEffect(() => {
+        if (!chatLoading && !chatQueryError) {
+            setIsSubmitting(false);
+            setUserInput(''); // Clear input after submission
+        }
+    }, [chatLoading, chatQueryError]);
+
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;
 
     return (
         <div className="home-page">
             <div className="section-container">
+                {/* Featured Recipes Section */}
                 <section className="featured-recipes-section">
                     <h2>Featured Recipes</h2>
                     <div className="featured-recipes-carousel">
@@ -55,6 +94,31 @@ function Home() {
                         )}
                     </div>
                 </section>
+
+                {/* Chatbot Section */}
+                <section className="chatbot-section">
+                    <h2>Talk to our Food Chatbot</h2>
+                    <form onSubmit={handleSubmit} className="chatbot-form">
+                        <input 
+                            type="text" 
+                            value={userInput} 
+                            onChange={handleInputChange} 
+                            placeholder="Ask the chatbot..." 
+                            disabled={isSubmitting}
+                        />
+                        <button type="submit" disabled={isSubmitting}>Send</button>
+                    </form>
+                    {chatbotError && <p className="chatbot-error">Error: {chatbotError}</p>}
+                    <div className="chatbot-conversation">
+                        {chatHistory.map((chat, index) => (
+                            <div key={index} className="chat-message">
+                                <p className="user-question"><strong>You:</strong> {chat.question}</p>
+                                <p className="bot-answer"><strong>Bot:</strong> {chat.answer}</p>
+                            </div>
+                        ))}
+                    </div>
+                </section>
+
                 {/* ... other sections ... */}
             </div>
         </div>

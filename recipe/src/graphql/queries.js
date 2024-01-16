@@ -46,3 +46,13 @@ export const GET_USER_RECIPES = gql`
     }
   }
 `;
+
+
+export const CHAT_WITH_BOT_QUERY = gql`
+    query ChatWithBot($userInput: String!, $contextId: String) {
+        chatWithBot(userInput: $userInput, contextId: $contextId) {
+            answerText
+            newContextId
+        }
+    }
+`;

@@ -66,7 +66,27 @@ const resolvers = {
                 throw new Error('Failed to fetch recipes');
             }
         },
+        async chatWithBot(_, { userInput, contextId }) {
+            try {
+                const response = await axios.get(`https://api.spoonacular.com/food/converse`, {
+                    params: {
+                        text: userInput,
+                        contextId,
+                        apiKey: process.env.SPOONACULAR_API_KEY
+                    }
+                });
+                return {
+                    answerText: response.data.answerText,
+                    newContextId: response.data.contextId
+                };
+            } catch (error) {
+                console.error('Error communicating with the chatbot:', error);
+                throw new Error('Failed to communicate with the chatbot');
+            }
+        },
     },
+
+    
     Mutation: {
         // User-related mutations
         register: async (_, { username, email, password }) => {

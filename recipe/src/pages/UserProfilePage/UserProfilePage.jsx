@@ -32,13 +32,12 @@ function UserProfilePage() {
             await createRecipe({
                 variables: { userId, ...recipeData }
             });
-            refetch(); // Refetch recipes to update the list
+            refetch(); 
         } catch (error) {
             console.error('Error saving recipe:', error);
         }
     };
 
-    // Function to be called when a new recipe is successfully created
     const handleRecipeCreated = () => {
         refetch();
     };
