@@ -1,14 +1,12 @@
-const jwt = require('jsonwebtoken');
+// In your login route
+const { signToken } = require('./path/to/auth');
+// ...
+const token = signToken(user);
+res.json({ token });
 
-const authenticateToken = (req, res, next) => {
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]; // Bearer TOKEN
-
-  if (token == null) return res.sendStatus(401); // if there's no token
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) return res.sendStatus(403); // if the token is not valid
-    req.user = user;
-    next(); // proceed to the next middleware
-  });
-};
+// In a protected route
+const { authenticateToken } = require('./path/to/authMiddleware');
+// ...
+router.get('/protected-route', authenticateToken, (req, res) => {
+    // Route logic
+});

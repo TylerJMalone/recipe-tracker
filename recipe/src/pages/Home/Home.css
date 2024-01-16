@@ -84,3 +84,18 @@ section {
         max-width: 100%;
     }
 }
+
+.featured-recipe img:hover {
+    opacity: 0.9;
+}
+
+.featured-recipe:hover {
+    transform: scale(1.05);
+    transition: transform 0.2s ease-in-out;
+}
+
+.featured-recipe {
+    text-align: center;
+    padding: 10px;
+    cursor: pointer; /* Indicates clickable items */
+}

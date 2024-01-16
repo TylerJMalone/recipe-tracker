@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, useContext } from 'react'; // Added useContext import
+import React, { createContext, useState, useEffect, useContext } from 'react';
 
 const AuthContext = createContext();
 
@@ -8,19 +8,23 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
 
     useEffect(() => {
-        // Check local storage for user token on initial load
         const userToken = localStorage.getItem('userToken');
+        console.log('AuthProvider useEffect - userToken from localStorage:', userToken);
         if (userToken) {
             setUser({ token: userToken });
+            console.log('AuthProvider useEffect - user state set:', { token: userToken });
         }
     }, []);
 
-    const login = (userData) => {
-        localStorage.setItem('userToken', userData.token);
-        setUser(userData);
+    const login = (token) => {
+        console.log('AuthProvider login - token:', token);
+        localStorage.setItem('userToken', token);
+        setUser({ token });
+        console.log('AuthProvider login - user state after login:', { token });
     };
 
     const logout = () => {
+        console.log('AuthProvider logout');
         localStorage.removeItem('userToken');
         setUser(null);
     };

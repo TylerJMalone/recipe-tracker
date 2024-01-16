@@ -1,12 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import Slider from 'react-slick';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+import { RANDOM_RECIPES_QUERY } from '../../graphql/queries'; // Make sure to create this query
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './Home.css';
-import '../../css/winter.css';
 
 function Home() {
     const [featuredRecipes, setFeaturedRecipes] = useState([]);
+    const navigate = useNavigate();
+    const { data, loading, error } = useQuery(RANDOM_RECIPES_QUERY);
+
+    useEffect(() => {
+        if (data && data.randomRecipes) {
+            setFeaturedRecipes(data.randomRecipes);
+        }
+    }, [data]);
 
     const settings = {
         dots: true,
@@ -18,23 +28,12 @@ function Home() {
         autoplaySpeed: 1500,
     };
 
-    useEffect(() => {
-        const fetchFeaturedRecipes = async () => {
-            try {
-                const response = await fetch('http://localhost:5000/api/randomRecipes');
-                if (response.ok) {
-                    const data = await response.json();
-                    setFeaturedRecipes(data);
-                } else {
-                    throw new Error('Network response was not ok');
-                }
-            } catch (error) {
-                console.error('Error fetching random recipes:', error);
-            }
-        };
+    const handleRecipeClick = (id) => {
+        navigate(`/recipe/${id}`);
+    };
 
-        fetchFeaturedRecipes();
-    }, []);
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error: {error.message}</p>;
 
     return (
         <div className="home-page">
@@ -42,11 +41,11 @@ function Home() {
                 <section className="featured-recipes-section">
                     <h2>Featured Recipes</h2>
                     <div className="featured-recipes-carousel">
-                        {featuredRecipes && featuredRecipes.length > 0 ? (
+                        {featuredRecipes.length > 0 ? (
                             <Slider {...settings}>
                                 {featuredRecipes.map((recipe) => (
-                                    <div key={recipe.id} className="featured-recipe">
-                                        <img src={recipe.image} alt={recipe.title} />
+                                    <div key={recipe.id} className="featured-recipe" onClick={() => handleRecipeClick(recipe.id)}>
+                                        <img src={recipe.image} alt={recipe.title} style={{ cursor: 'pointer' }} />
                                         <h3>{recipe.title}</h3>
                                     </div>
                                 ))}
@@ -56,14 +55,7 @@ function Home() {
                         )}
                     </div>
                 </section>
-                <section className="recipe-of-the-season-section">
-                    <h2>Recipe of the Season</h2>
-                    {/* Content for recipe of the season */}
-                </section>
-                <section className="tailored-recipe-section">
-                    <h2>Tailored Recipe</h2>
-                    {/* Content for tailored recipe */}
-                </section>
+                {/* ... other sections ... */}
             </div>
         </div>
     );

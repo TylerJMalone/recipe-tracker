@@ -1,6 +1,6 @@
 import React from 'react';
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header/Header';
 import HomePage from './pages/Home/Home';
@@ -14,9 +14,10 @@ import ProtectedRoute from './components/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 
 const client = new ApolloClient({
-  uri: '/graphql',
+  uri: 'http://localhost:5000/graphql', // This line needs to be updated
   cache: new InMemoryCache(),
 });
+
 
 function App() {
   return (

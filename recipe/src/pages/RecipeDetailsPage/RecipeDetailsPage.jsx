@@ -1,41 +1,30 @@
-// RecipeDetailsPage.jsx
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
+import { GET_RECIPE_DETAILS } from '../../graphql/queries';
 import './RecipeDetailsPage.css'; 
 
 function RecipeDetailsPage() {
-    const [recipeDetails, setRecipeDetails] = useState(null);
     const { id } = useParams();
+    
+    // GraphQL query hook
+    const { loading, data, error } = useQuery(GET_RECIPE_DETAILS, {
+        variables: { id },
+    });
 
-    useEffect(() => {
-        const fetchRecipeDetails = async () => {
-            try {
-                const response = await fetch(`http://localhost:5000/api/getRecipeDetails/${id}`);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                setRecipeDetails(data);
-            } catch (error) {
-                console.error('Error fetching recipe details:', error);
-            }
-        };
+    if (loading) return <p>Loading...</p>;
+    if (error) return <p>Error loading recipe details: {error.message}</p>;
 
-        fetchRecipeDetails();
-    }, [id]);
-
-    if (!recipeDetails) {
-        return <p>Loading...</p>;
-    }
+    const { getRecipeDetails: recipeDetails } = data;
 
     return (
-        <div className="recipe-details"> {/* Apply the class name here */}
+        <div className="recipe-details">
             <h1>{recipeDetails.title}</h1>
             <img src={recipeDetails.image} alt={recipeDetails.title} />
             <h2>Ingredients</h2>
             <ul>
-                {recipeDetails.extendedIngredients.map((ingredient, index) => (
-                    <li key={index}>{ingredient.original}</li>
+                {recipeDetails.ingredients.map((ingredient, index) => (
+                    <li key={index}>{ingredient}</li>
                 ))}
             </ul>
             {/* Render other recipe details */}

@@ -1,41 +1,76 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
+import { useQuery, useMutation } from '@apollo/client';
+import { jwtDecode } from 'jwt-decode'; 
+import { GET_USER_RECIPES } from '../../graphql/queries';
+import { CREATE_RECIPE } from '../../graphql/mutations';
+import CreateRecipeForm from '../../components/CreateRecipeForm/CreateRecipeForm';
+import './UserProfilePage.css';
 
 function UserProfilePage() {
-  
-    const [savedRecipes, setSavedRecipes] = useState([]);
+    const token = localStorage.getItem('userToken');
+    let userId;
 
-    useEffect(() => {
-        
-    }, []);
+    if (token) {
+        const decoded = jwtDecode(token);
+        userId = decoded.userId;
+    }
 
-    const createRecipeCard = async (recipeId) => {
+    const { loading, error, data, refetch } = useQuery(GET_USER_RECIPES, {
+        variables: { userId },
+        skip: !userId
+    });
+
+    const [createRecipe] = useMutation(CREATE_RECIPE);
+
+    const handleSaveRecipe = async (recipeData) => {
+        if (!userId) {
+            console.error('UserId is undefined. Unable to create recipe.');
+            return;
+        }
+
         try {
-            const response = await fetch(`https://api.spoonacular.com/recipes/${recipeId}/card?apiKey=cfc8783e7b444135bbf2fca55e9a4e18`);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const data = await response.json();
-            // Handle the generated recipe card URL (data.url)
+            await createRecipe({
+                variables: { userId, ...recipeData }
+            });
+            refetch(); // Refetch recipes to update the list
         } catch (error) {
-            console.error('Error creating recipe card:', error);
+            console.error('Error saving recipe:', error);
         }
     };
 
+    // Function to be called when a new recipe is successfully created
+    const handleRecipeCreated = () => {
+        refetch();
+    };
+
+    if (!userId) {
+        return <p>User not found. Please log in.</p>;
+    }
+
+    if (loading) {
+        return <p>Loading...</p>;
+    }
+
+    if (error) {
+        return <p>Error loading recipes: {error.message}</p>;
+    }
     return (
-        <div>
+        <div className="user-profile-page">
             <h1>User Profile</h1>
+            <CreateRecipeForm onSave={handleSaveRecipe} onRecipeCreated={handleRecipeCreated} />
             <h2>Saved Recipes</h2>
             <div>
-                {savedRecipes.map((recipe, index) => (
-                    <div key={index}>
+                {data?.getUserRecipes.map((recipe, index) => (
+                    <div key={index} className="recipe-card">
                         <h3>{recipe.title}</h3>
-                        <img src={recipe.image} alt={recipe.title} />
-                        <button onClick={() => createRecipeCard(recipe.id)}>Create Recipe Card</button>
+                        {recipe.image && <img src={recipe.image} alt={recipe.title} />} {/* Display image if available */}
+                        <p><strong>Ingredients:</strong> {recipe.ingredients.join(', ')}</p>
+                        <p><strong>Instructions:</strong> {recipe.instructions.join(', ')}</p>
+                        <p><strong>Prep time:</strong> {recipe.readyInMinutes} minutes</p>
+                        <p><strong>Servings:</strong> {recipe.servings}</p>
                     </div>
                 ))}
             </div>
-            <Link to="/create-recipe">Create New Recipe</Link> {/* Link to create recipe page */}
         </div>
     );
 }

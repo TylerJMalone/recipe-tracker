@@ -3,27 +3,33 @@ require('dotenv').config(); // This should be the first line
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const recipeRoutes = require('./routes/recipes');
-const userRoutes = require('./routes/userRoutes')
+const { ApolloServer } = require('apollo-server-express');
+const typeDefs = require('../recipe/src/graphql/schema');
+const resolvers = require('../recipe/src/graphql/resolvers');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-// MongoDB connection string
 const MONGO_URI = 'mongodb://127.0.0.1:27017/RecipeBook';
 
-// Connect to MongoDB
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Successfully connected to MongoDB'))
-  .catch((error) => console.error('Could not connect to MongoDB:', error));
+.then(() => console.log('Successfully connected to MongoDB'))
+.catch((error) => console.error('Could not connect to MongoDB:', error));
 
-// Middlewares
-app.use(cors()); // Enable CORS
-app.use(express.json()); 
-app.use('/api', recipeRoutes);
-app.use('/api/users', userRoutes);
+app.use(cors());
+app.use(express.json());
 
-// Start the server
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
-});
+// Apollo Server setup
+const apolloServer = new ApolloServer({ typeDefs, resolvers });
+
+// Start the Apollo Server
+async function startApolloServer() {
+  await apolloServer.start();
+  apolloServer.applyMiddleware({ app });
+
+  app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
+    console.log(`GraphQL endpoint: ${apolloServer.graphqlPath}`);
+  });
+}
+
+startApolloServer();

@@ -1,34 +1,29 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
+import { useMutation } from '@apollo/client';
+import { REGISTER_USER } from '../../graphql/mutations';
 import './SignupPage.css';
 
 function SignupPage() {
     const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
     const [email, setEmail] = useState('');
-    const { login } = useAuth();
+    const [password, setPassword] = useState('');
     const navigate = useNavigate();
+
+    const [registerUser, { loading, error }] = useMutation(REGISTER_USER, {
+        onCompleted: (data) => {
+            console.log('Signup successful:', data);
+            navigate('/login');
+        },
+        onError: (error) => {
+            console.error('Signup failed:', error);
+        },
+    });
+
     const handleSignup = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:5000/api/users/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, email, password }),
-            });
-    
-            if (!response.ok) {
-                throw new Error('Signup failed');
-            }
-    
-         
-            console.log('Signup successful:', await response.json());
-    
-          
-            navigate('/login');
+            await registerUser({ variables: { username, email, password } });
         } catch (error) {
             console.error('Signup failed:', error);
         }
@@ -37,7 +32,7 @@ function SignupPage() {
     return (
         <div className="auth-page">
             <form onSubmit={handleSignup} className="auth-form">
-            <h1>Hi! Welcome Foodie!</h1>
+                <h1>Hi! Welcome Foodie!</h1>
                 <h2>Sign Up</h2>
                 <input
                     type="text"
@@ -57,7 +52,8 @@ function SignupPage() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button type="submit">Sign Up</button>
+                <button type="submit" disabled={loading}>Sign Up</button>
+                {error && <p>Error: {error.message}</p>}
                 <p>Already have an account? What are you waiting for, <a href="/login">Log In</a></p>
             </form>
         </div>
