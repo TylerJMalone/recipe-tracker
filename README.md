@@ -6,20 +6,30 @@ Why pluck your hair trying to remember a recipe your great-grandmother's father'
 
 ## Table of Contents:
 
-- [Overview](#Overview)
+- [Deployed Link](#Deployed-Link)
+- [Github Repository](#Github-Repository)
 - [Technologies Used](#Technologies-Used)
 - [Getting Started](#Getting-Started)
 - [Screenshots](#Screenshots)
-- [Deployed Link](#Deployed-Link)
-- [Github Repository](#Github-Repository)
 - [Authors](#Authors)
 
-### Overview
+## Overview
+
+### Deployed Link
+
+- [Click Here](https://spoons.onrender.com/login)
+
+### Github Repository
+
+- [Spoons](https://github.com/TylerJMalone/recipe-tracker)
 
 ### Technologies Used
 
 ```md
-The list of technologies used and why we used them will go here.
+- React
+- GraphQL
+- MongoDB
+- Render
 ```
 
 ### API(s)
@@ -38,17 +48,11 @@ Recipe finding API: [Spoonacular](https://spoonacular.com)
 
 ### Screenshots
 
-```md
-Screenshots/GIFs will go here
-```
+![winterPage](recipe/src/images/winterPage.png)
 
-### Deployed Link
+![springPage](recipe/src/images/springPage.png)
 
-- [Click Here](https://deployed.link/will-go/here)
-
-### Github Repository
-
-- [Spoos](https://github.com/TylerJMalone/recipe-tracker)
+![autumnPage](recipe/src/images/autumnPage.png)
 
 ### Authors
 
@@ -56,3 +60,7 @@ Screenshots/GIFs will go here
 - [Matthew Pool](https://github.com/hewman82)
 - [Salome Mphago](https://github.com/Saiishago)
 - [Tyler Malone](https://github.com/TylerJMalone)
+
+---
+
+© 2024 Spoons. All Rights Reserved and Stuff.
