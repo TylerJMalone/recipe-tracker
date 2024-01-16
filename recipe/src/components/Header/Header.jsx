@@ -2,6 +2,9 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Header.css';
 import '../../css/winter.css';
+/*import "../../css/summer.css";
+import "../../css/autumn.css";
+import "../../css/spring.css";*/
 import theLogo from '../../images/Spoons-logo.png'
 
 import { useAuth } from '../../context/AuthContext'; 

@@ -1,6 +1,9 @@
 import React from "react";
 import "./Footer.css";
 import "../../css/winter.css";
+/*import "../../css/summer.css";
+import "../../css/autumn.css";
+import "../../css/spring.css";*/
 
 function Footer() {
   return (

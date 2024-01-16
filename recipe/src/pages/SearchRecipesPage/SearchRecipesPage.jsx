@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 import { SEARCH_RECIPES } from '../../graphql/queries';
 import './SearchRecipesPage.css';
+import "../../css/winter.css";
+/*import "../../css/summer.css";
+import "../../css/autumn.css";
+import "../../css/spring.css";*/
 
 function SearchRecipesPage() {
     const [searchQuery, setSearchQuery] = useState('');
