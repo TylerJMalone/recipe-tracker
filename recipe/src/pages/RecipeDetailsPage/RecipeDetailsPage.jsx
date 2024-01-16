@@ -2,7 +2,11 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import { GET_RECIPE_DETAILS } from '../../graphql/queries';
-import './RecipeDetailsPage.css'; 
+import './RecipeDetailsPage.css';
+import "../../css/winter.css";
+/*import "../../css/summer.css";
+import "../../css/autumn.css";
+import "../../css/spring.css";*/ 
 
 function RecipeDetailsPage() {
     const { id } = useParams();

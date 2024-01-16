@@ -4,6 +4,10 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_MUTATION } from '../../graphql/mutations';
 import { useAuth } from '../../context/AuthContext';
 import './LoginPage.css';
+import "../../css/winter.css";
+/*import "../../css/summer.css";
+import "../../css/autumn.css";
+import "../../css/spring.css";*/
 
 function LoginPage() {
     const [email, setEmail] = useState('');

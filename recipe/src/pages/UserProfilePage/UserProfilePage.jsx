@@ -5,6 +5,10 @@ import { GET_USER_RECIPES } from '../../graphql/queries';
 import { CREATE_RECIPE } from '../../graphql/mutations';
 import CreateRecipeForm from '../../components/CreateRecipeForm/CreateRecipeForm';
 import './UserProfilePage.css';
+import "../../css/winter.css";
+/*import "../../css/summer.css";
+import "../../css/autumn.css";
+import "../../css/spring.css";*/
 
 function UserProfilePage() {
     const token = localStorage.getItem('userToken');

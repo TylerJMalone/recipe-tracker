@@ -3,6 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { REGISTER_USER } from '../../graphql/mutations';
 import './SignupPage.css';
+import "../../css/winter.css";
+/*import "../../css/summer.css";
+import "../../css/autumn.css";
+import "../../css/spring.css";*/
 
 function SignupPage() {
     const [username, setUsername] = useState('');

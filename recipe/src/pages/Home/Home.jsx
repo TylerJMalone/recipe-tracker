@@ -6,6 +6,10 @@ import { RANDOM_RECIPES_QUERY, CHAT_WITH_BOT_QUERY } from '../../graphql/queries
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import './Home.css';
+import "../../css/winter.css";
+/*import "../../css/summer.css";
+import "../../css/autumn.css";
+import "../../css/spring.css";*/
 
 function Home() {
     const [featuredRecipes, setFeaturedRecipes] = useState([]);
