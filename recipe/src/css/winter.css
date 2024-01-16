@@ -70,7 +70,8 @@ section {
 /*LoginPage.jsx*/
 .auth-form {
     border: 1px solid var(--five);
-    background-color: var(--three);
+    background-image: url(../images/winterLogin.png);
+    /*background-color: var(--three);*/
 }
 
 .auth-form input {
@@ -89,6 +90,31 @@ section {
 .auth-form a {
     color: var(--four);
 }
+
+/*SignUpPage.jsx*/
+.auth-form {
+    border: 1px solid var(--five);
+    background-image: url(../images/winterSignup.png);
+    /*background-color: var(--three);*/
+}
+
+.auth-form input {
+    border: 1px solid var(--five);
+}
+
+.auth-form button {
+    background-color: var(--two);
+    color: var(--six);
+}
+
+.auth-form button:hover {
+    background-color: var(--one);
+}
+
+.auth-form a {
+    color: var(--four);
+}
+
 /*SearchRecipesPage.jsx*/
 .search-bar input {
     border: 1px solid var(--five);
@@ -102,28 +128,7 @@ section {
 .search-bar button:hover {
     background-color: var(--one);
 }
-/*SignUpPage.jsx*/
-.auth-form {
-    border: 1px solid var(--five);
-    background-color: var(--three);
-}
 
-.auth-form input {
-    border: 1px solid var(--five);
-}
-
-.auth-form button {
-    background-color: var(--two);
-    color: var(--six);
-}
-
-.auth-form button:hover {
-    background-color: var(--one);
-}
-
-.auth-form a {
-    color: var(--four);
-}
 /*Footer.jsx*/
 .footer {
     background-color: var(--six);

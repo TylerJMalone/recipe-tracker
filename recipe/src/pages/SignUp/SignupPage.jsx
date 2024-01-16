@@ -32,7 +32,7 @@ function SignupPage() {
     return (
         <div className="auth-page">
             <form onSubmit={handleSignup} className="auth-form">
-                <h1>Hi! Welcome Foodie!</h1>
+                <h1>Hi! Welcome to your virtual Cook Book!</h1>
                 <h2>Sign Up</h2>
                 <input
                     type="text"
